@@ -27,6 +27,7 @@ async function main() {
   await isHoliday('2022-01-29'); // false
   //  判断 2022-01-31  是不是节假日
   await isHoliday('2022-01-31'); // true
+
   // 判断 2022-02-01 是不是工作日
   await isWorkingDay(date); // false
   //  判断 2022-01-29  是不是工作日 （含法定调休上班
