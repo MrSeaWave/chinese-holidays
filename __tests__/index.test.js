@@ -1,5 +1,5 @@
 import {
-  isWorkingDay, isHoliday, isWeekEnd, getDateInfo
+  isWorkingDay, isHoliday, isWeekEnd, getDateInfo, getHolidaysCache
 } from '../src';
 
 describe('chinese-holidays Jest', () => {
@@ -86,5 +86,9 @@ describe('chinese-holidays Jest', () => {
     expect(date).toBe('2022-02-12');
     expect(day).toBe('星期六');
     expect(type).toBe(2);
+  });
+  it('getHolidaysCache', async () => {
+    const res = getHolidaysCache();
+    expect(res).toHaveProperty('2022');
   });
 });

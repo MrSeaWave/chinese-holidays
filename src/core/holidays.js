@@ -45,12 +45,19 @@ class Holidays {
 
   // 从链接中获取新的年份信息
   async _getRemoteData(year) {
+    console.log(`------ Start: 获取远程日期(${year})数据中... ------`);
     const resp = await getMethod({ url: `/${year}.json` });
+    console.log('------ End: 结束获取 ------');
     const { success, data } = resp;
     if (!success) return;
     const { days = [] } = data || {};
     if (!days.length) throw new Error(`暂时没有 ${year} 年的放假数据，请稍后重试 `);
     this.holidays[year] = days;
+  }
+
+  // 获取本地holidays缓存
+  getHolidaysCache() {
+    return this.holidays;
   }
 }
 

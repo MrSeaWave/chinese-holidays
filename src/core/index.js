@@ -70,3 +70,11 @@ export async function isWeekEnd(date) {
   const info = await getDateInfo(date);
   return info.type === 2;
 }
+
+/**
+ * @desc 获取本地的假期缓存数据
+ * @returns {{}}
+ */
+export function getHolidaysCache() {
+  return holidays.getHolidaysCache();
+}
