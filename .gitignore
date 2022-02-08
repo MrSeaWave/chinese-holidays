@@ -1,0 +1,6 @@
+.idea
+node_modules
+.eslintcache
+lib
+es
+coverage
