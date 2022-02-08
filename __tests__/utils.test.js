@@ -16,9 +16,9 @@ describe('Chinese Holidays Utils Jest', () => {
     } catch (e) {
       expect(e.message).toBe('Invalid date: 2022-01-45');
     }
-    expect(dateFormat('2022-01-02')).toBe('2022-01-02 08:00:00');
+    expect(dateFormat('2022-01-02 08:00:00')).toBe('2022-01-02 08:00:00');
     expect(dateFormat(1644301265762)).toBe('2022-02-08 14:21:05');
-    expect(dateFormat(new Date('2022-02-02'))).toBe('2022-02-02 08:00:00');
+    expect(dateFormat(new Date('2022-02-02 08:00:00'))).toBe('2022-02-02 08:00:00');
     expect(dateFormat(new Date('2022-02-02'), 'YYYY-MM-DD')).toBe('2022-02-02');
   });
   it('getWeekDay', async () => {
