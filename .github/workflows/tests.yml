@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+# 设置环境变量
+env:
+  TZ: Asia/Shanghai # 时区（设置时区可使页面中的`最近更新时间`使用时区时间）
+
 jobs:
   test-ci:
     runs-on: ubuntu-latest
