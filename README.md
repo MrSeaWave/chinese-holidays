@@ -38,7 +38,7 @@ async function main() {
   await isWeekEnd('2022-04-09'); // true
 
   // 获取日期信息
-  await getDateInfo('2022-01-02');
+  await getDateInfo('2022-02-01');
   // 返回如下数据
   //   {
   //   "name": "春节",
