@@ -4,6 +4,7 @@
     "jest": true
   },
   "rules": {
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }]
   }
 }
