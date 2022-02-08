@@ -1,6 +1,6 @@
 {
   "name": "@swjs/chinese-holidays",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "中国法定节假日查询",
   "keywords": [
     "chinese",
