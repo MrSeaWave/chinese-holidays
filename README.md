@@ -101,6 +101,7 @@ const dateInfo = {
 
 ## TODOLIST
 
+- [ ] 增加手动更新缓存的功能
 - [ ] 提供离线模式
 
 ## Contributing
