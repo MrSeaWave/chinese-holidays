@@ -1,5 +1,7 @@
 {
   "extends": ["config:base"],
+  "timezone": "Asia/Shanghai",
+  "schedule": ["every weekend"],
   "automergeType": "branch",
   "packageRules": [
     {
