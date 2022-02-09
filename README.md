@@ -2,7 +2,7 @@
 
 中国法定节假日查询，判断当前日期是否是节假日
 
-数据源来自 [holiday-cn](https://github.com/NateScarlet/holiday-cn) , [国家通知](http://www.gov.cn/zhengce/content/2021-10/25/content_5644835.htm)
+数据源来自 [holiday-cn](https://github.com/NateScarlet/holiday-cn)（自动每日抓取[国务院公告](http://www.gov.cn/zhengce/content/2021-10/25/content_5644835.htm)）
 
 [![npm (scoped)](https://img.shields.io/npm/v/@swjs/chinese-holidays)](https://www.npmjs.com/package/@swjs/chinese-holidays)
 [![npm](https://img.shields.io/npm/dw/@swjs/chinese-holidays)](https://www.npmjs.com/package/@swjs/chinese-holidays)
