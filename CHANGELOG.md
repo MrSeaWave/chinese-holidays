@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Other
+
+- 升级一些依赖
+
 ## [v0.0.1] - 2022-02-08
 
 ### Added
