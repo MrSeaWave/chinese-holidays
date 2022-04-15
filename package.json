@@ -55,7 +55,7 @@
     "eslint-plugin-promise": "6.0.0",
     "husky": "7.0.4",
     "jest": "27.5.1",
-    "lint-staged": "12.3.7",
+    "lint-staged": "12.3.8",
     "pinst": "2.1.6",
     "prettier": "2.6.2",
     "rimraf": "3.0.2",
