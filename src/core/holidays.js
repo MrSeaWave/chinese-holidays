@@ -45,9 +45,9 @@ class Holidays {
 
   // 从链接中获取新的年份信息
   async _getRemoteData(year) {
-    console.log(`------ Start: 获取远程日期(${year})数据中... ------`);
+    // console.log(`------ Start: 获取远程日期(${year})数据中... ------`);
     const resp = await getMethod({ url: `/${year}.json` });
-    console.log('------ End: 结束获取 ------');
+    // console.log('------ End: 结束获取 ------');
     const { success, data } = resp;
     if (!success) return;
     const { days = [] } = data || {};
