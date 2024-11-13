@@ -28,6 +28,13 @@ class Holidays {
     const date = new Date(dateStr);
     const year = date.getFullYear();
     const holidays = await this.getHolidaysByYear(year);
+    if (date.getMonth() === 11) {
+      try {
+        holidays.push(...(await this.getHolidaysByYear(year + 1)))
+      } catch (e) {
+        // console.warn(`暂时没有 ${year + 1} 年的放假数据，当前结果可能不准确`)
+      }
+    }
     return holidays.find((info) => info.date === dateStr);
   }
 
