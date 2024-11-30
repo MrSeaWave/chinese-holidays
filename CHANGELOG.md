@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.0.1
+
+### Patch Changes
+
+- f14b368: 增加build脚本
+
 ## 1.0.0
 
 ### Major Changes
