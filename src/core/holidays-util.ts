@@ -1,7 +1,7 @@
 import { HolidaysInfo } from './holidays-info';
 import { AcceptDateType, dateFormat, getWeekDay, isWeekEnd as utilsIsWeekEnd } from './utils';
 
-enum EDateType {
+export enum EDateType {
   /**
    * 工作日
    */
@@ -19,6 +19,7 @@ enum EDateType {
    */
   LeaveInLieu = 4,
 }
+
 type DateInfo = {
   /**
    * 工作日，周末，春节,元旦，，，
@@ -42,7 +43,7 @@ type DateInfo = {
  * 判定日期的工具集
  */
 class Holidays {
-  holidays: HolidaysInfo;
+  holidaysInfo: HolidaysInfo;
   static instance: Holidays;
 
   static getInstance() {
@@ -53,7 +54,7 @@ class Holidays {
   }
 
   constructor() {
-    this.holidays = new HolidaysInfo();
+    this.holidaysInfo = new HolidaysInfo();
   }
 
   /**
@@ -74,7 +75,7 @@ class Holidays {
       result.name = '周末';
       result.type = 2;
     }
-    const holiday = await this.holidays.getDateInfo(dateStr);
+    const holiday = await this.holidaysInfo.getDateInfo(dateStr);
     if (holiday) {
       const { isOffDay, name } = holiday;
       result.name = name + (isOffDay ? '' : ' 调班');
@@ -115,7 +116,7 @@ class Holidays {
    * @desc 获取本地的假期缓存数据
    */
   getHolidaysCache = () => {
-    return this.holidays.getHolidaysCache();
+    return this.holidaysInfo.getHolidaysCache();
   };
 }
 

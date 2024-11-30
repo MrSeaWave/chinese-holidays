@@ -9,6 +9,7 @@
   ],
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es"
@@ -16,8 +17,9 @@
   "scripts": {
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "clean": "rimraf lib dist es coverage",
-    "build": "rollup -c ./rollup.config.js",
+    "clean:dist": "rimraf lib dist es coverage",
+    "prebuild": "pnpm run clean:dist",
+    "build": "rollup -c ./rollup.config.mjs",
     "release": "bump --commit \"chore(release): publish v%s \"  --push --tag --all",
     "prerelease": "node ./scripts/pre-release.mjs",
     "lint": "eslint --cache src/",
@@ -44,6 +46,9 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/js": "^9.15.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.1",
     "@types/node": "^22.9.1",
     "@typescript-eslint/eslint-plugin": "8.15.0",
     "@typescript-eslint/parser": "8.15.0",
@@ -61,13 +66,13 @@
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.27.4",
+    "rollup-plugin-dts": "^6.1.1",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.15.0",
     "vitest": "^2.1.6"
   },
   "dependencies": {
-    "@babel/runtime": "^7.26.0",
     "axios": "^1.7.8"
   },
   "packageManager": "pnpm@9.14.2",
