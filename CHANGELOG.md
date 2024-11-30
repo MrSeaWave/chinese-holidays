@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.0.3
+
+### Patch Changes
+
+- 0d4d3c7: 增加build脚本
+
 ## 1.0.2
 
 ### Patch Changes
