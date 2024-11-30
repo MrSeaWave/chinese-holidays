@@ -44,7 +44,7 @@ jobs:
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: Install dependencies 📦️
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run test
         run: pnpm run test:coverage
