@@ -64,6 +64,10 @@ jobs:
       - name: Install dependencies 📦️
         run: pnpm install --frozen-lockfile
 
+        # prepublishOnly 在CI中不工作，因此手动进行build，see https://github.com/changesets/changesets/issues/860
+      - name: Build 📦️
+        run: pnpm run build
+
       - name: Setup credentials
         # 仅是为了区分，暂无其他作用
         run: |

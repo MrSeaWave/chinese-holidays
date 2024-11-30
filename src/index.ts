@@ -9,5 +9,3 @@ export const getHolidaysCache = holidays.getHolidaysCache;
 export const __isHoliday__ = holidays?.isHoliday;
 
 export { Holidays };
-
-// 测试文件2
