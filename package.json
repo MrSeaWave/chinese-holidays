@@ -24,6 +24,7 @@
     "lint:fix": "npm run lint:js -- --fix",
     "precommit": "lint-staged",
     "prepare": "husky",
+    "prepublishOnly": "pnpm run build",
     "ci:publish": "changeset publish",
     "ci:version": "changeset version",
     "clean-local": "rimraf --glob '**/node_modules'"
