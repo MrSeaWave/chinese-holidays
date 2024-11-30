@@ -1,16 +1,22 @@
 # Change Log
-All notable changes to this project will be documented in this file.
+
+## 1.0.0
+
+### Major Changes
+
+- 6f50662: 代码使用TS版本
+  All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-
 ## [v0.0.2] - 2023-10-08
 
 - 移除console
 - update pre-release.mjs script
+
 ### Other
 
 - 升级一些依赖
@@ -20,4 +26,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - init，提供中国的休假安排
-
