@@ -26,14 +26,6 @@ export class HolidaysInfo {
   holidays: {
     [year: string]: HolidayInfo[] | undefined;
   };
-  static instance: HolidaysInfo;
-
-  static getInstance() {
-    if (!this.instance) {
-      this.instance = new HolidaysInfo();
-    }
-    return this.instance;
-  }
 
   constructor() {
     // 日期的缓存
@@ -50,7 +42,7 @@ export class HolidaysInfo {
     const year = date.getFullYear();
     const holidays = await this.getHolidaysByYear(String(year));
     // see https://github.com/MrSeaWave/chinese-holidays/pull/124
-    // 2023年12月31的节假日日期在2024年才能获得
+    // 2022年12月31的节假日日期在2023年才能获得，有些时候会有调休
     if (date.getMonth() === 11) {
       const nextYear = year + 1;
       const nextHolidays = await this.getHolidaysByYear(String(nextYear));
