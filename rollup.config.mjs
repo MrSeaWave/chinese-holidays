@@ -34,7 +34,7 @@ const config = [
       commonjs(),
       nodeResolve(),
       // 代码中使用的最新的语法会被转译成ES6
-      typescript({ target: 'ES6', module: 'ES6' }),
+      typescript({ target: 'ES6' }),
     ],
   },
   {
