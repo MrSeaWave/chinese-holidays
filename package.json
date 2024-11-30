@@ -20,13 +20,12 @@
     "clean:dist": "rimraf lib dist es coverage",
     "prebuild": "pnpm run clean:dist",
     "build": "rollup -c ./rollup.config.mjs",
-    "release": "bump --commit \"chore(release): publish v%s \"  --push --tag --all",
-    "prerelease": "node ./scripts/pre-release.mjs",
     "lint": "eslint --cache src/",
     "lint:fix": "npm run lint:js -- --fix",
-    "prepublishOnly": "npm run clean && npm run build && pinst --disable",
     "precommit": "lint-staged",
     "prepare": "husky",
+    "ci:publish": "changeset publish",
+    "ci:version": "changeset version",
     "clean-local": "rimraf --glob '**/node_modules'"
   },
   "repository": {
