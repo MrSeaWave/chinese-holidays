@@ -1,0 +1,85 @@
+# 自动发布
+name: Auto Publish
+
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src'
+      - 'package.json'
+
+env:
+  CI: true
+
+jobs:
+  auto-publish:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          # 0 indicates all history for all branches and tags.
+          fetch-depth: '0'
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+
+      - name: Global install Pnpm 🔨
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.2
+
+      - name: Print Env 📄
+        run: |
+          echo "node"
+          node -v
+          echo "npm"
+          npm -v
+          echo "pnpm"
+          pnpm -v
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies 📦️
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup credentials
+        # 仅是为了区分，暂无其他作用
+        run: |
+          git config --global user.email action@github.com
+          git config --global user.name GitHub Action
+
+      - name: Create and Publish versions 🚀
+        uses: changesets/action@v1
+        with:
+          version: pnpm run ci:version
+          commit: 'chore(release): publish 🎨 🎨 🎨'
+          title: 'chore(release): Auto Publish'
+          publish: pnpm run ci:publish
+        env:
+          # GITHUB_TOKEN 是 CI 里自带的默认 token，应该不用再次配置
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          # see https://github.com/changesets/action/issues/311
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

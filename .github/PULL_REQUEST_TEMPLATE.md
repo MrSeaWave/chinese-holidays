@@ -37,4 +37,4 @@ The specific problem solved.
 Describe changes from the user side, and list all potential break changes or other risks.
 --->
 
-- [ ] 更新 CHANGELOG.md / Update CHANGELOG.md
+- [ ] 更新 changeset / Update changeset.md (run `pnpm changeset`)

@@ -1,4 +1,5 @@
 {
-  "*.{json,css,md}": ["prettier -w"],
-  "*.js": ["prettier -w", "npm run lint:fix"]
+  "*.{json,md}": ["prettier -w"],
+  "package.json": ["npmPkgJsonLint ."],
+  "?(*.{js,ts}|!(package).json)": ["prettier --write", "eslint --fix"]
 }

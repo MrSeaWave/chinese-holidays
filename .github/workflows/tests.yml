@@ -8,6 +8,8 @@ on:
 
 # 设置环境变量
 env:
+  CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
   TZ: Asia/Shanghai # 时区（设置时区可使页面中的`最近更新时间`使用时区时间）
 
 jobs:
@@ -16,59 +18,39 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
 
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@main
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+
+      - name: use Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Global install Yarn 🔨
-        run: npm install -g yarn
-      - name: Print Env 📝
+      - name: Global install Pnpm 🔨
+        run: npm install -g pnpm@9.14.2
+      - name: Print Env 📄
         run: |
           echo "node"
           node -v
           echo "npm"
           npm -v
-          echo "yarn"
-          yarn -v
-      - name: Get yarn cache directory path 📝
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache yarn cache 📝
-        uses: actions/cache@v2
-        id: cache-yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Cache node_modules 📝
-        id: cache-node-modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-nodeModules-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-nodeModules-
+          echo "pnpm"
+          pnpm -v
+      # https://pnpm.io/zh/using-changesets
+      - name: Setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: Install dependencies 📦️
-        if: |
-          steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
-          steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
-      - name: Build 🔨
-        run: npm run build
-      - name: Run test ✅
-        run: npm run test
-      - name: Upload coverage report to codeCov
-        uses: codecov/codecov-action@v2
+      - name: Run test
+        run: pnpm run test:coverage
+
+      - name: upload coverage report to codeCov
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }} # required
