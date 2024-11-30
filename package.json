@@ -19,11 +19,12 @@
     "build": "rollup -c ./rollup.config.js",
     "release": "bump --commit \"chore(release): publish v%s \"  --push --tag --all",
     "prerelease": "node ./scripts/pre-release.mjs",
-    "lint:js": "eslint --cache --ext .js src/",
+    "lint": "eslint --cache src/",
     "lint:fix": "npm run lint:js -- --fix",
-    "postinstall": "husky install",
     "prepublishOnly": "npm run clean && npm run build && pinst --disable",
-    "postpublish": "pinst --enable"
+    "precommit": "lint-staged",
+    "prepare": "husky",
+    "clean-local": "rimraf --glob '**/node_modules'"
   },
   "repository": {
     "type": "git",
@@ -39,31 +40,37 @@
   },
   "homepage": "https://github.com/MrSeaWave/chinese-holidays#readme",
   "devDependencies": {
-    "@babel/core": "7.23.5",
-    "@babel/plugin-transform-runtime": "7.23.4",
-    "@babel/preset-env": "7.23.5",
-    "@commitlint/cli": "16.3.0",
-    "@commitlint/config-conventional": "16.2.4",
-    "@jsdevtools/version-bump-prompt": "6.1.0",
-    "@rollup/plugin-babel": "5.3.1",
-    "@rollup/plugin-commonjs": "21.1.0",
-    "@rollup/plugin-node-resolve": "13.3.0",
-    "eslint": "8.56.0",
-    "eslint-config-sea": "0.2.3",
-    "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "6.1.1",
-    "husky": "7.0.4",
-    "inquirer": "^9.2.11",
-    "jest": "27.5.1",
-    "lint-staged": "12.5.0",
-    "pinst": "2.1.6",
-    "prettier": "2.8.8",
-    "rimraf": "3.0.2",
-    "rollup": "2.79.1"
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^22.9.1",
+    "@typescript-eslint/eslint-plugin": "8.15.0",
+    "@typescript-eslint/parser": "8.15.0",
+    "eslint": "9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.12.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "npm-package-json-lint": "^8.0.0",
+    "npm-package-json-lint-config-default": "^7.0.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.27.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.16.7",
-    "axios": "^0.27.0"
-  }
+    "@babel/runtime": "^7.26.0",
+    "axios": "^1.7.8"
+  },
+  "packageManager": "pnpm@9.14.2",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "contributors": []
 }

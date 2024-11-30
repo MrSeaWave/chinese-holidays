@@ -1,11 +1,12 @@
 import axios from 'axios';
+
 import { BASE_URL } from './config';
 
-const request = (url, data, method = 'get') => {
+const request = (url: string, data: any, method = 'get') => {
   const requestUrl = BASE_URL + url;
-  const options = {
+  const options: any = {
     method,
-    url: requestUrl
+    url: requestUrl,
   };
   if (method !== 'get') {
     options.data = data;
@@ -15,4 +16,4 @@ const request = (url, data, method = 'get') => {
   return axios(options).then((resp) => ({ success: true, data: resp.data }));
 };
 
-export const getMethod = ({ url, data }) => request(url, data, 'get');
+export const getMethod = ({ url, data }: { url: string; data?: any }) => request(url, data, 'get');

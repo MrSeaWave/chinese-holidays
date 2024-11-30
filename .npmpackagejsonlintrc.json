@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/npmpackagejsonlintrc",
+  "extends": "npm-package-json-lint-config-default",
+  "rules": {
+    "require-name": "error",
+    "name-format": "error",
+    "require-version": "error",
+    "version-format": "error",
+    "require-repository": "error",
+    "require-license": "error",
+    "valid-values-license": ["error", ["UNLICENSED", "MIT"]],
+    "prefer-alphabetical-dependencies": "error",
+    "prefer-alphabetical-devDependencies": "error",
+    "prefer-alphabetical-peerDependencies": "error",
+    "no-duplicate-properties": "error",
+    "require-author": "error",
+    "require-contributors": "error"
+  }
+}
