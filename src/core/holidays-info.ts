@@ -1,35 +1,32 @@
-import { getMethod } from './request';
+import { getRemoteHolidaysApi, HolidayInfo } from './apis';
+import { BASE_URL } from './config';
+import { WithRequiredProperty } from './type-utils';
 
-export interface HolidayInfo {
+export interface HolidaysInfoConfig {
   /**
-   * 节假日名字
-   * e.g
-   * 元旦
+   * cdn地址，默认是 https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master
    */
-  name: string;
-  /**
-   * 日期
-   * e.g
-   * 2024-01-01
-   */
-  date: string;
-  /**
-   * 是否为休息日
-   */
-  isOffDay: boolean;
+  baseUrl?: string;
 }
 
 /**
  * @desc 假期信息
  */
 export class HolidaysInfo {
+  /**
+   * 日期的缓存
+   */
   holidays: {
     [year: string]: HolidayInfo[] | undefined;
-  };
+  } = {};
 
-  constructor() {
-    // 日期的缓存
-    this.holidays = {};
+  config: WithRequiredProperty<HolidaysInfoConfig, 'baseUrl'>;
+
+  constructor(config?: HolidaysInfoConfig) {
+    this.config = {
+      baseUrl: BASE_URL,
+      ...(config || {}),
+    };
   }
 
   /**
@@ -65,11 +62,12 @@ export class HolidaysInfo {
   // 从链接中获取新的年份信息
   async _getRemoteData(year: string) {
     // console.log(`------ Start: 获取远程日期(${year})数据中... ------`);
-    const resp = await getMethod({ url: `/${year}.json` });
+    const resp = await getRemoteHolidaysApi(year, { baseUrl: this.config.baseUrl });
+    //await getMethod({ url: `/${year}.json` });
     // console.log('------ End: 结束获取 ------');
-    const { success, data } = resp;
+    const { success } = resp;
     if (!success) return;
-    const { days = [] } = data || {};
+    const { days = [] } = resp.data || {};
     if (!days.length) throw new Error(`暂时没有 ${year} 年的放假数据，请稍后重试 `);
     this.holidays[year] = days;
   }

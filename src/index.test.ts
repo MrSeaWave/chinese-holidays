@@ -93,4 +93,16 @@ describe('chinese-holidays test', () => {
     const res = getHolidaysCache();
     expect(res).toHaveProperty('2022');
   });
+
+  test('Use Holidays config and holidays.isHoliday should be right', async () => {
+    const holidays = new Holidays({
+      baseUrl: 'https://gcore.jsdelivr.net/gh/NateScarlet/holiday-cn@master',
+    });
+    const res1 = await holidays.isHoliday('2022-02-01');
+    const res2 = await holidays.isHoliday('2022-02-07');
+    const res3 = await holidays.isHoliday('2022-12-31');
+    expect(res1).toBeTruthy();
+    expect(res2).toBeFalsy();
+    expect(res3).toBeTruthy();
+  });
 });
