@@ -25,8 +25,10 @@
     "precommit": "lint-staged",
     "prepare": "husky",
     "prepublishOnly": "pnpm run build",
-    "ci:publish": "changeset publish",
     "ci:version": "changeset version",
+    "prerelease": "pnpm run build",
+    "release": "changeset publish",
+    "release:snapshot": "changeset version --snapshot canary && pnpm run release --tag canary --no-git-tag --snapshot",
     "clean-local": "rimraf --glob '**/node_modules'"
   },
   "repository": {
