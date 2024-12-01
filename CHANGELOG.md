@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.1.0
+
+### Minor Changes
+
+- 243beee: 用户可以更改基础配置
+
+### Patch Changes
+
+- 31b152b: modify release script
+
 ## 1.0.3
 
 ### Patch Changes
