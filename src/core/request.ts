@@ -16,4 +16,9 @@ const request = (url: string, data: any, method = 'get') => {
   return axios(options).then((resp) => ({ success: true, data: resp.data }));
 };
 
+/**
+ * @deprecated 不再使用
+ * @param param0
+ * @returns
+ */
 export const getMethod = ({ url, data }: { url: string; data?: any }) => request(url, data, 'get');

@@ -1,4 +1,4 @@
-import { HolidaysInfo } from './holidays-info';
+import { HolidaysInfo, HolidaysInfoConfig } from './holidays-info';
 import { AcceptDateType, dateFormat, getWeekDay, isWeekEnd as utilsIsWeekEnd } from './utils';
 
 export enum EDateType {
@@ -53,8 +53,8 @@ class Holidays {
     return this.instance;
   }
 
-  constructor() {
-    this.holidaysInfo = new HolidaysInfo();
+  constructor(config?: HolidaysInfoConfig) {
+    this.holidaysInfo = new HolidaysInfo(config);
   }
 
   /**

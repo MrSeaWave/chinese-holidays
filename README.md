@@ -19,7 +19,7 @@ $ npm i @swjs/chinese-holidays
 ## 基本用法
 
 ```js
-import { isWorkingDay, isHoliday, isWeekEnd, getDateInfo } from '@swjs/chinese-holidays';
+import { isWorkingDay, isHoliday, isWeekEnd, getDateInfo, Holidays } from '@swjs/chinese-holidays';
 
 async function main() {
   const date = '2022-02-01';
@@ -49,6 +49,12 @@ async function main() {
   //   "day": "星期二",
   //   "type": 3
   // }
+
+  // 自己手动替换baseUrl参数
+  let holidays = new Holidays({
+    baseUrl: 'https://gcore.jsdelivr.net/gh/NateScarlet/holiday-cn@master',
+  });
+  await holidays.isHoliday('2022-12-31').then(console.log);
 }
 ```
 
@@ -97,6 +103,14 @@ const dateInfo = {
   type: 3,
 };
 ```
+
+### Holidays
+
+Holidays 类，上述方法都是从 new Holidays 导出的，如果想要修改基础配置，可以使用此类
+
+| 参数    | 说明                                                                                                                                                           | 类型     | 默认值                                                         |
+| :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------------------------------------------------------------- |
+| baseUrl | cdn 前缀，如果想要进行更换，请确保更换后的链接(`${baseUrl}/2022.json`) 可以访问，e.g: `https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master/2022.json` | `string` | `https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master` |
 
 ## CHANGELOG
 
