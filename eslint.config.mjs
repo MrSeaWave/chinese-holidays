@@ -81,7 +81,7 @@ export default tseslint.config(
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           pathGroups: [
             {
-              pattern: '@shopee/**',
+              pattern: '@sea/**',
               group: 'external',
               position: 'after',
             },
