@@ -1,0 +1,50 @@
+name: Lint CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CI: true
+  TZ: Asia/Shanghai
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+
+      - name: Global install Pnpm 🔨
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.2
+
+      - name: Print Env 📄
+        run: |
+          echo "node"
+          node -v
+          echo "npm"
+          npm -v
+          echo "pnpm"
+          pnpm -v
+
+      - name: Install dependencies 📦️
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESlint
+        run: pnpm run lint

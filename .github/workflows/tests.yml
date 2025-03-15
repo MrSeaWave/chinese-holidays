@@ -30,7 +30,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Global install Pnpm 🔨
-        run: npm install -g pnpm@9.14.2
+        run: npm install -g pnpm@10.6.2
       - name: Print Env 📄
         run: |
           echo "node"
