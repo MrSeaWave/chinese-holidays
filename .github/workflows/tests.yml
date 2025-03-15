@@ -24,24 +24,17 @@ jobs:
       - name: checkout
         uses: actions/checkout@main
 
-      - name: use Node.js
+      - name: Global install Pnpm 🔨
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.2
+
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Global install Pnpm 🔨
-        run: npm install -g pnpm@10.6.2
-      - name: Print Env 📄
-        run: |
-          echo "node"
-          node -v
-          echo "npm"
-          npm -v
-          echo "pnpm"
-          pnpm -v
-      # https://pnpm.io/zh/using-changesets
-      - name: Setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
 
       - name: Install dependencies 📦️
         run: pnpm install --frozen-lockfile
