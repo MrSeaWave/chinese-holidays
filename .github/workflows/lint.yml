@@ -1,4 +1,4 @@
-name: 'TESTS CI'
+name: Lint CI
 
 on:
   push:
@@ -6,14 +6,12 @@ on:
   pull_request:
     branches: [main]
 
-# 设置环境变量
 env:
   CI: true
-  PNPM_CACHE_FOLDER: .pnpm-store
-  TZ: Asia/Shanghai # 时区（设置时区可使页面中的`最近更新时间`使用时区时间）
+  TZ: Asia/Shanghai
 
 jobs:
-  test-ci:
+  eslint:
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,7 +19,7 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@main
 
       - name: Global install Pnpm 🔨
@@ -36,14 +34,17 @@ jobs:
           registry-url: https://registry.npmjs.org/
           cache: 'pnpm'
 
+      - name: Print Env 📄
+        run: |
+          echo "node"
+          node -v
+          echo "npm"
+          npm -v
+          echo "pnpm"
+          pnpm -v
+
       - name: Install dependencies 📦️
         run: pnpm install --frozen-lockfile
 
-      - name: Run test
-        run: pnpm run test:coverage
-
-      - name: upload coverage report to codeCov
-        uses: codecov/codecov-action@v4
-        with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }} # required
+      - name: Run ESlint
+        run: pnpm run lint
