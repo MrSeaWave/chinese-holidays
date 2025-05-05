@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.1
+
+### Patch Changes
+
+- e371db8: 升级 pnpm 版本
+
 ## 1.1.0
 
 ### Minor Changes
