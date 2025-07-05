@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-type ApiResponse<T> =
+export type ApiResponse<T> =
   | {
       success: true;
       data: T;
