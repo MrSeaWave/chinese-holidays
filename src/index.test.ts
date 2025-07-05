@@ -1,10 +1,15 @@
-import { describe, test, expect } from 'vitest';
+import { beforeEach } from 'node:test';
+
+import { describe, test, expect, vi } from 'vitest';
 
 import Holidays, { holidays } from './core/holidays-util';
 
 import { isWorkingDay, isHoliday, isWeekEnd, getDateInfo, getHolidaysCache } from './index';
 
 describe('chinese-holidays test', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   test('holidays instance should be Holidays', () => {
     expect(holidays instanceof Holidays).toBeTruthy();
   });
@@ -121,5 +126,30 @@ describe('chinese-holidays test', () => {
     const key = holidays.holidaysInfo.createFetchingCacheKey('2022');
     // @ts-expect-error test
     expect(holidays.holidaysInfo.fetchingCache[key]).toBeInstanceOf(Promise);
+  });
+
+  test('throwFetchingError为 true 时，应该扔出报错', async () => {
+    const holidays = new Holidays({
+      baseUrl: 'https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master',
+      throwFetchingError: true,
+    });
+    // @ts-expect-error test
+    holidays.holidaysInfo._getRemoteHolidaysWithCache = vi.fn(() =>
+      Promise.resolve({ success: true })
+    );
+    const promise = holidays.isHoliday('2223-02-03');
+    await expect(promise).rejects.toThrowError('暂时没有 2223 年的放假数据，请稍后重试');
+  });
+  test('throwFetchingError为 false 时，应该打印出报错', async () => {
+    const holidays = new Holidays({
+      baseUrl: 'https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master',
+    });
+    // @ts-expect-error test
+    holidays.holidaysInfo._getRemoteHolidaysWithCache = vi.fn(() =>
+      Promise.resolve({ success: true })
+    );
+    console.error = vi.fn();
+    await holidays.isHoliday('2223-02-03');
+    expect(console.error).toHaveBeenCalledWith('暂时没有 2223 年的放假数据，请稍后重试');
   });
 });
