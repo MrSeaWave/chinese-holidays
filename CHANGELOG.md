@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.2.0
+
+### Minor Changes
+
+- babdb0e: 优化: 并发判断节假日时,只请求一次接口
+
+### Patch Changes
+
+- e371db8: 升级 pnpm 版本
+
 ## 1.1.0
 
 ### Minor Changes
