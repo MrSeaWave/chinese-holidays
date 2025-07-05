@@ -105,4 +105,21 @@ describe('chinese-holidays test', () => {
     expect(res2).toBeFalsy();
     expect(res3).toBeTruthy();
   });
+
+  test('并发判断日期是否是假期', async () => {
+    const holidays = new Holidays({
+      baseUrl: 'https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master',
+    });
+    const [res1, res2] = await Promise.all([
+      holidays.isHoliday('2022-02-01'),
+      holidays.isHoliday('2022-02-07'),
+    ]);
+
+    expect(res1).toBeTruthy();
+    expect(res2).toBeFalsy();
+    // @ts-expect-error test
+    const key = holidays.holidaysInfo.createFetchingCacheKey('2022');
+    // @ts-expect-error test
+    expect(holidays.holidaysInfo.fetchingCache[key]).toBeInstanceOf(Promise);
+  });
 });

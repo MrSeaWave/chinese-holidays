@@ -1,4 +1,4 @@
-import { getRemoteHolidaysApi, HolidayInfo } from './apis';
+import { ApiResponse, getRemoteHolidaysApi, HolidayInfo, RemoteHolidaysInfoResp } from './apis';
 import { BASE_URL } from './config';
 import { WithRequiredProperty } from './type-utils';
 
@@ -7,6 +7,11 @@ export interface HolidaysInfoConfig {
    * cdn地址，默认是 https://fastly.jsdelivr.net/gh/NateScarlet/holiday-cn@master
    */
   baseUrl?: string;
+
+  /**
+   * 当未获取指定年份的假期时，扔出报错
+   */
+  throwFetchingError?: boolean;
 }
 
 /**
@@ -19,6 +24,12 @@ export class HolidaysInfo {
   holidays: {
     [year: string]: HolidayInfo[] | undefined;
   } = {};
+
+  /**
+   * 请求缓存，防止请求出现并发的情况
+   */
+  private fetchingCache: Record<string, Promise<ApiResponse<RemoteHolidaysInfoResp>> | undefined> =
+    {};
 
   config: WithRequiredProperty<HolidaysInfoConfig, 'baseUrl'>;
 
@@ -62,14 +73,40 @@ export class HolidaysInfo {
   // 从链接中获取新的年份信息
   async _getRemoteData(year: string) {
     // console.log(`------ Start: 获取远程日期(${year})数据中... ------`);
-    const resp = await getRemoteHolidaysApi(year, { baseUrl: this.config.baseUrl });
+    const resp = await this._getRemoteHolidaysWithCache(year);
     //await getMethod({ url: `/${year}.json` });
     // console.log('------ End: 结束获取 ------');
     const { success } = resp;
-    if (!success) return;
+    if (!success) {
+      delete this.fetchingCache[this.createFetchingCacheKey(year)];
+      return;
+    }
     const { days = [] } = resp.data || {};
-    if (!days.length) throw new Error(`暂时没有 ${year} 年的放假数据，请稍后重试 `);
+    if (!days.length) {
+      const msg = `暂时没有 ${year} 年的放假数据，请稍后重试`;
+      if (this.config.throwFetchingError) {
+        throw new Error(msg);
+      }
+      console.error(msg);
+      return;
+    }
     this.holidays[year] = days;
+  }
+
+  async _getRemoteHolidaysWithCache(year: string) {
+    const key = this.createFetchingCacheKey(year);
+
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    if (this.fetchingCache[key]) {
+      return this.fetchingCache[key];
+    }
+    this.fetchingCache[key] = getRemoteHolidaysApi(year, { baseUrl: this.config.baseUrl });
+
+    return this.fetchingCache[key];
+  }
+
+  private createFetchingCacheKey(year: string) {
+    return `${this.config.baseUrl}/${year}`;
   }
 
   // 获取本地holidays缓存
